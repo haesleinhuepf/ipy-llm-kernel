@@ -1,7 +1,10 @@
 # ipy-llm-kernel
 
 ipy-llm-kernel is a Jupyter kernel that allows you to type in English language and receive responses from a large language model (LLM).
-It can make use of [OpenAI's chatGPT](https://openai.com/blog/openai-api), [Google's Gemini](https://blog.google/technology/ai/google-gemini-ai/), [Anthropic's Claude](https://www.anthropic.com/api), [Helmholtz' blablador](https://helmholtz-blablador.fz-juelich.de/) and [Ollama](https://ollama.com). 
+
+![img_1.png](docs/images/img_1.png)
+
+It can make use of [OpenAI's chatGPT](https://openai.com/blog/openai-api), [Anthropic's Claude](https://www.anthropic.com/api), [Helmholtz' blablador](https://helmholtz-blablador.fz-juelich.de/) and [Ollama](https://ollama.com). 
 You need an OpenAI API, Anthropic, Google or a Helmholtz account to use it.
 Using it with Ollama is free but requires running an Ollama server locally.
 
@@ -17,9 +20,8 @@ After starting `jupyter lab`, select the LLM Kernel.
 
 ![img.png](docs/images/img.png)
 
-You can then type in English language and receive responses from the LLM.
+You can then type in English language and receive responses from the LLM as demonstrated above
 
-![img_1.png](docs/images/img_1.png)
 
 ## Installation
 
