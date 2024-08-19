@@ -71,6 +71,7 @@ There are similar projects:
 * [jupyter-ai](https://github.com/jupyterlab/jupyter-ai)
 * [chatGPT-jupyter-extension](https://github.com/jflam/chat-gpt-jupyter-extension)
 * [chapyter](https://github.com/chapyter/chapyter/)
+* [ipython-gpt](https://github.com/santiagobasulto/ipython-gpt)
 
 ## Issues
 
