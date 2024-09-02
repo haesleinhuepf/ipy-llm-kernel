@@ -120,7 +120,7 @@ class LLMKernel(MetaKernel):
 def asks_for_image(message, prompt_function):
     """Check if the user asks for an image"""
 
-    keywords = ["image", "plot", "show", "display", "visualize", "draw", "paint", "render", "picture"]
+    keywords = ["image", "plot", "show", "display", "visualize", "draw", "paint", "render", "picture", "comic"]
     # check if the message contains none of the keywords
     if not any([keyword in message for keyword in keywords]):
         return False
