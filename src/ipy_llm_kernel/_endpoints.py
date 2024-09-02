@@ -117,3 +117,20 @@ def prompt_with_memory(message: str, prompt: callable = prompt_chatgpt):
     Memory.chat_history.append(answer)
 
     return response
+
+
+def generate_image_from_openai(message: str, width:int=1024, height:int=1024, model="dall-e-3"):
+    """
+    Generate an image from a given prompt.
+    """
+    from openai import OpenAI
+
+    client = OpenAI()
+    response = client.images.generate(
+        model=model,
+        prompt=message,
+        n=1,
+        size=f"{width}x{height}"
+    )
+    image_url = response.data[0].url
+    return image_url

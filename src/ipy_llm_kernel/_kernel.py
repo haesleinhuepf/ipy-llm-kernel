@@ -2,8 +2,10 @@ from metakernel import MetaKernel
 import sys, os
 
 DEFAULT_MODEL = "gpt-4o-2024-08-06"
+DEFAULT_IMAGEN_MODEL = "dall-e-3"
 
 llm_name = os.environ.get("IPY_LLM_KERNEL_MODEL", DEFAULT_MODEL)
+imagen_llm_name = os.environ.get("IPY_IMAGEN_LLM_KERNEL_MODEL", DEFAULT_IMAGEN_MODEL)
 
 class LLMKernel(MetaKernel):
     implementation = 'llm-kernel'
@@ -48,7 +50,7 @@ class LLMKernel(MetaKernel):
 
     def get_usage(self):
         return """
-        Use human language to prompt for tasks interacting with data.
+        Use human language to prompt for things.
         Documentation: https://github.com/haesleinhuepf/ipy-llm-kernel
         """
 
@@ -70,11 +72,21 @@ class LLMKernel(MetaKernel):
     def do_execute_direct(self, message):
         """This function is called when the user executes a cell with a given prompt."""
         from ._endpoints import prompt_with_memory
-        from IPython.display import Markdown
+        from IPython.display import Markdown, HTML
+        from ._endpoints import generate_image_from_openai
+        from stackview._utilities import numpy_to_gif_bytestream, _gif_to_html
+        from skimage.io import imread
+        if asks_for_image(message, self._prompt_function):
+            image_url = generate_image_from_openai(message, model=imagen_llm_name)
+            image = imread(image_url)
+            #stackview.imshow(image)
 
-        response = prompt_with_memory(message, self._prompt_function)
-
-        self.Display(Markdown(response))
+            bytestream = numpy_to_gif_bytestream([image], frame_delay_ms=100, num_loops=10)
+            self.Display(HTML(_gif_to_html(bytestream, width=int(image.shape[-2]))))
+            self.Display(Markdown(f"[Download image]({image_url})"))
+        else:
+            response = prompt_with_memory(message, self._prompt_function)
+            self.Display(Markdown(response))
 
         return None
 
@@ -103,3 +115,14 @@ class LLMKernel(MetaKernel):
     async def do_debug_request(self, msg):
         self.Print("Debug")
         pass
+
+
+def asks_for_image(message, prompt_function):
+    """Check if the user asks for an image"""
+
+    keywords = ["image", "plot", "show", "display", "visualize", "draw", "paint", "render", "picture"]
+    # check if the message contains none of the keywords
+    if not any([keyword in message for keyword in keywords]):
+        return False
+
+    return "YES" in prompt_function(f"Decide if the following prompt asks for an image:\n\n{message}\n\nAnswer with YES or NO.")
