@@ -22,6 +22,12 @@ After starting `jupyter lab`, select the LLM Kernel.
 
 You can then type in English language and receive responses from the LLM as demonstrated above
 
+### Generating images
+
+If your prompt asks for generating images, it may generate this image for you. At the moment, only OpenAI/Dall-E3 is supported for this. You need an OpenAI API Key for this.
+
+![img.png](docs/images/imagen_example.png)
+
 
 ## Installation
 
